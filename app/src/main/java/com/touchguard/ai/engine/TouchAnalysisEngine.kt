@@ -6,6 +6,7 @@ import com.touchguard.ai.core.model.DeadZoneConfig
 import com.touchguard.ai.core.model.DeadZoneMode
 import com.touchguard.ai.core.model.FilteredTouchEvent
 import com.touchguard.ai.core.model.GhostTouchAnomaly
+import com.touchguard.ai.core.model.ProfileType
 import com.touchguard.ai.core.model.ProtectionProfile
 import com.touchguard.ai.core.model.RawMotionEvent
 import com.touchguard.ai.core.model.TouchCategory
