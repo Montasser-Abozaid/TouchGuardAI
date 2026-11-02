@@ -1,0 +1,114 @@
+<resources>
+    <string name="app_name">Touch Guard AI</string>
+    <string name="app_tagline">Advanced Ghost Touch Detection &amp; Digitizer Protection</string>
+    <string name="tile_label">Touch Shield</string>
+    <string name="accessibility_service_description">Touch Guard AI Accessibility Bridge: Used for window overlay testing and system gesture telemetry exploration.</string>
+
+    <!-- Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_diagnostics">Diagnostics</string>
+    <string name="nav_deadzones">Dead Zones</string>
+    <string name="nav_profiles">Profiles</string>
+    <string name="nav_reports">System Research</string>
+    <string name="nav_simulator">Simulator</string>
+
+    <!-- Dashboard -->
+    <string name="status_shield_active">PROTECTION ACTIVE</string>
+    <string name="status_shield_standby">SHIELD STANDBY</string>
+    <string name="status_shield_calibrating">CALIBRATING SENSORS</string>
+    <string name="shield_toggle_start">ENGAGE SHIELD</string>
+    <string name="shield_toggle_stop">DISENGAGE</string>
+    <string name="emergency_disable">EMERGENCY KILLSWITCH</string>
+    <string name="emergency_desc">Instantly destroys all overlay windows and releases screen control</string>
+
+    <!-- Metrics -->
+    <string name="metric_threat_level">Threat Level</string>
+    <string name="metric_threat_low">Low / Stable</string>
+    <string name="metric_threat_medium">Medium Jitter</string>
+    <string name="metric_threat_high">High Burst</string>
+    <string name="metric_threat_critical">Severe Phantom</string>
+    <string name="metric_abnormal_events">Ghost Events Filtered</string>
+    <string name="metric_active_deadzones">Active Dead Zones</string>
+    <string name="metric_touch_rate">Input Sample Rate</string>
+    <string name="metric_target_device">Target Hardware</string>
+    <string name="activity_graph_title">Live Touch Event Frequency &amp; Anomaly Curve</string>
+
+    <!-- Diagnostics -->
+    <string name="diag_title">Touchscreen Diagnostics Suite</string>
+    <string name="diag_grid_test">Full Screen Touch Grid</string>
+    <string name="diag_grid_desc">Interactive matrix to verify digitizer responsiveness across all segments</string>
+    <string name="diag_multitouch">10-Point Multi-Touch Test</string>
+    <string name="diag_multitouch_desc">Verify pointer tracking, pressure jitter, and ghost finger spawns</string>
+    <string name="diag_linear_test">Linearity &amp; Continuity Test</string>
+    <string name="diag_linear_desc">Detect broken tracks along horizontal and vertical axes</string>
+    <string name="diag_deadpixel">Dead Pixel vs Dead Zone Test</string>
+    <string name="diag_deadpixel_desc">RGB screen wash to separate display panel flaws from digitizer touch faults</string>
+    <string name="diag_autonomous">Autonomous Ghost Touch Monitor</string>
+    <string name="diag_autonomous_desc">Hands-free test: leave phone untouched to automatically detect phantom touch bursts</string>
+    <string name="diag_heatmap">Touch Density Heatmap</string>
+    <string name="diag_heatmap_desc">Visual thermal map highlighting high-frequency fault zones</string>
+    <string name="diag_start_test">Start Test</string>
+    <string name="diag_reset">Reset Canvas</string>
+    <string name="diag_exit">Exit Test</string>
+
+    <!-- Dead Zones -->
+    <string name="deadzone_title">Smart Dead Zone Protection</string>
+    <string name="deadzone_desc">Mark physically damaged areas where the digitizer produces phantom contacts. Overlays isolate the zone from reaching underlying apps.</string>
+    <string name="deadzone_add_zone">Add Dead Zone</string>
+    <string name="deadzone_calibrate">Interactive Visual Calibration</string>
+    <string name="deadzone_mode_monitor">Monitor Only (Log Events)</string>
+    <string name="deadzone_mode_block">Block Touch Zone (Overlay Shield)</string>
+    <string name="deadzone_warning">Warning: Blocking a zone will absorb ALL touch events inside its perimeter, both ghost and legitimate finger touches.</string>
+    <string name="deadzone_name">Zone Name</string>
+    <string name="deadzone_preset_top_edge">Top Notch &amp; Status Edge</string>
+    <string name="deadzone_preset_bottom_bar">Bottom Navigation Edge</string>
+    <string name="deadzone_preset_left_edge">Left Lateral Edge</string>
+    <string name="deadzone_preset_right_edge">Right Lateral Edge</string>
+    <string name="deadzone_preset_center">Center Crack Area</string>
+    <string name="deadzone_preset_custom">Custom Rectangular Box</string>
+
+    <!-- Profiles -->
+    <string name="profiles_title">Smart Protection Profiles</string>
+    <string name="profile_normal">Normal Mode</string>
+    <string name="profile_normal_desc">Standard balanced filtering for everyday use with mild screen blemishes</string>
+    <string name="profile_sensitive">Sensitive Screen Mode</string>
+    <string name="profile_sensitive_desc">Aggressive jitter suppression for erratic digitizers with micro-cracks</string>
+    <string name="profile_damaged_edge">Damaged Edge Mode</string>
+    <string name="profile_damaged_edge_desc">Reinforces edge palm &amp; phantom rejection along bezel perimeters</string>
+    <string name="profile_damaged_zone">Damaged Zone Mode</string>
+    <string name="profile_damaged_zone_desc">Activates persistent overlay shields on user-calibrated fault areas</string>
+    <string name="profile_diagnostic">Diagnostic Mode</string>
+    <string name="profile_diagnostic_desc">Full logging mode: records all raw touch telemetry without dropping events</string>
+
+    <!-- Simulator -->
+    <string name="simulator_title">Ghost Touch Simulator (Validation Mode)</string>
+    <string name="simulator_desc">Simulate digitizer hardware faults without damaging a physical phone to test algorithm detection scores in real time.</string>
+    <string name="sim_single_tap">Inject Phantom Tap</string>
+    <string name="sim_burst">Inject Rapid Micro-Burst (50 taps/sec)</string>
+    <string name="sim_edge_jitter">Simulate Edge Jitter</string>
+    <string name="sim_erratic_drag">Simulate Random Jump Drag</string>
+    <string name="sim_stationary_tremor">Simulate Stationary Tremor</string>
+    <string name="sim_normal_swipe">Simulate Normal Finger Swipe</string>
+
+    <!-- Permissions -->
+    <string name="permission_overlay_title">Overlay Permission Required</string>
+    <string name="permission_overlay_desc">Touch Guard AI needs \'Display over other apps\' to create protective dead-zone shields and the emergency killswitch.</string>
+    <string name="grant_permission">Grant Permission</string>
+
+    <!-- Notification -->
+    <string name="notif_channel_name">Touch Guard AI Service</string>
+    <string name="notif_channel_desc">Active Ghost Touch Protection Monitoring</string>
+    <string name="notif_title_active">Touch Guard AI is Protecting Your Screen</string>
+    <string name="notif_content_active">Shield Active: %1$d phantom events prevented</string>
+    <string name="notif_action_kill">Emergency Stop</string>
+    <string name="notif_action_settings">Settings</string>
+
+    <!-- Device Details -->
+    <string name="device_info_title">Hardware &amp; System Profiler</string>
+    <string name="device_model">Device Model: %1$s (%2$s)</string>
+    <string name="device_soc">SoC / Processor: %1$s</string>
+    <string name="device_emui">EMUI Version: %1$s</string>
+    <string name="device_android">Android Version: %1$s (API %2$d)</string>
+    <string name="device_resolution">Screen: %1$d x %2$d @ %3$.1f Hz</string>
+    <string name="device_input_drivers">Input Drivers Detected: %1$s</string>
+</resources>

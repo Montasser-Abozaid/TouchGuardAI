@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Touch Guard AI - Interactive Simulator & Diagnostics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-navy: #070B19;
+            --surface-navy: #0D1527;
+            --card-glass: rgba(20, 31, 56, 0.75);
+            --glass-border: rgba(42, 59, 102, 0.6);
+            --electric-blue: #0D6EFD;
+            --neon-cyan: #00F0FF;
+            --neon-emerald: #00E676;
+            --neon-amber: #FFAB00;
+            --neon-danger: #FF1744;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', 'Outfit', sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background: var(--dark-navy);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .header {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 16px 24px;
+            background: var(--card-glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+        }
+
+        .brand h1 {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFF, var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand p {
+            font-size: 12px;
+            color: var(--neon-cyan);
+            margin-top: 2px;
+        }
+
+        .badge {
+            background: rgba(13, 110, 253, 0.2);
+            border: 1px solid var(--electric-blue);
+            color: var(--neon-cyan);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 6px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--neon-cyan);
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Phone Screen Mockup */
+        .phone-frame {
+            background: var(--surface-navy);
+            border: 2px solid var(--glass-border);
+            border-radius: 36px;
+            padding: 14px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .notch {
+            width: 120px;
+            height: 18px;
+            background: #03060E;
+            border-radius: 0 0 12px 12px;
+            margin-bottom: 8px;
+        }
+
+        .screen-canvas-wrapper {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: #040814;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: crosshair;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .screen-overlay-deadzone {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: rgba(255, 23, 68, 0.3);
+            border-bottom: 2px solid var(--neon-danger);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFF;
+            font-size: 11px;
+            font-weight: 700;
+            pointer-events: all;
+        }
+
+        /* Dashboard & Controls */
+        .controls-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .glass-card {
+            background: var(--card-glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(12px);
+        }
+
+        .card-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .metric-box {
+            background: rgba(7, 11, 25, 0.6);
+            border: 1px solid rgba(42, 59, 102, 0.4);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .metric-box label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .metric-box .val {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .threat-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            background: var(--card-glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--electric-blue);
+            border: none;
+            color: #FFF;
+        }
+
+        .btn-danger {
+            background: rgba(255, 23, 68, 0.2);
+            border-color: var(--neon-danger);
+            color: var(--neon-danger);
+        }
+
+        .log-list {
+            max-height: 180px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .log-item {
+            background: rgba(7, 11, 25, 0.8);
+            border-left: 3px solid var(--neon-cyan);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .log-item.anomaly {
+            border-left-color: var(--neon-danger);
+            background: rgba(46, 23, 34, 0.5);
+        }
+
+        /* Pulse Shield */
+        .shield-pulse {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.2) 0%, transparent 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--neon-cyan);
+            margin: 0 auto 12px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 14px rgba(0, 240, 255, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="brand">
+            <h1 id="appTitle">TOUCH GUARD AI</h1>
+            <p id="appSub">نظام الذكاء الاصطناعي لكشف وعزل اللمسات الوهمية | Huawei Honor 8X</p>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+            <div class="badge" id="devBadge">HONOR 8X (KIRIN 710)</div>
+            <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">English</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Phone Mockup Canvas -->
+        <div class="phone-frame">
+            <div class="notch"></div>
+            <div class="screen-canvas-wrapper" id="screenWrapper">
+                <canvas id="touchCanvas" width="370" height="600"></canvas>
+                <div class="screen-overlay-deadzone" id="topDeadZone">
+                    🛡️ DR-SHIELD: TOP NOTCH DEAD ZONE (BLOCKED)
+                </div>
+            </div>
+            <p style="font-size: 11px; color: var(--text-secondary); margin-top: 10px;" id="canvasHint">
+                المس أو اسحب داخل الشاشة لاختبار خوارزمية التصفية مباشرة
+            </p>
+        </div>
+
+        <!-- Dashboard Telemetry & Controls -->
+        <div class="controls-panel">
+            <!-- Protection Status Card -->
+            <div class="glass-card" style="text-align: center;">
+                <div class="shield-pulse">
+                    <span style="font-size: 26px;">🛡️</span>
+                </div>
+                <h2 style="font-size: 18px; font-weight: 800; color: var(--neon-cyan);" id="shieldStatusText">الحماية نشطة (PROTECTION ACTIVE)</h2>
+                <p style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;" id="shieldSubText">محرك التحليل يعترض الأحداث المشبوهة ويمنع النبضات الوهمية</p>
+
+                <div style="margin-top: 14px; display: flex; gap: 10px; justify-content: center;">
+                    <button class="btn btn-primary" onclick="toggleShield()" id="toggleShieldBtn">إيقاف الحماية مؤقتاً</button>
+                    <button class="btn btn-danger" onclick="triggerEmergencyKill()" id="killswitchBtn">⚡ زر الطوارئ الفوري</button>
+                </div>
+            </div>
+
+            <!-- Telemetry Metrics -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <span>📊</span> <span id="telemetryTitle">القياس عن بُعد (LIVE TELEMETRY)</span>
+                </div>
+                <div class="metric-grid">
+                    <div class="metric-box">
+                        <label id="lblThreat">مستوى الخطورة</label>
+                        <div class="val" id="threatVal" style="color: var(--neon-emerald); font-size: 16px;">منخفض / مستقر</div>
+                    </div>
+                    <div class="metric-box">
+                        <label id="lblSuppressed">اللمسات المحجوبة</label>
+                        <div class="val" id="suppressedVal" style="color: var(--neon-danger);">0</div>
+                    </div>
+                    <div class="metric-box">
+                        <label id="lblTotal">إجمالي الأحداث</label>
+                        <div class="val" id="totalVal">0</div>
+                    </div>
+                    <div class="metric-box">
+                        <label id="lblZones">المناطق الميتة</label>
+                        <div class="val" id="zonesVal" style="color: var(--neon-amber);">1 نشطة</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ghost Touch Fault Injector -->
+            <div class="glass-card">
+                <div class="card-title">
+                    <span>🧪</span> <span id="simTitle">محاكي أعطال الشاشة (GHOST TOUCH SIMULATOR)</span>
+                </div>
+                <p style="font-size: 11px; color: var(--text-secondary);" id="simDesc">حقن أنماط أعطال عتادية لاختبار كفاءة نظام النقاط دون إتلاف الهاتف:</p>
+                <div class="btn-group">
+                    <button class="btn" onclick="injectSubFrameTap()">⚡ نقرة سريعة (4ms)</button>
+                    <button class="btn" onclick="injectMicroBurst()">💥 نبضات متكررة (50Hz)</button>
+                    <button class="btn" onclick="injectTeleportJump()">🚀 قفزة عشوائية</button>
+                    <button class="btn" onclick="injectNormalSwipe()">👆 سحبة إصبع طبيعية</button>
+                </div>
+            </div>
+
+            <!-- Event Log -->
+            <div class="glass-card">
+                <div class="card-title" style="justify-content: space-between;">
+                    <div><span>📝</span> <span id="logTitle">سجل الأحداث المباشر</span></div>
+                    <button style="background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 11px;" onclick="clearLogs()">مسح السجل</button>
+                </div>
+                <div class="log-list" id="eventLogList">
+                    <div class="log-item">
+                        <span>جاهز للاختبار. نظام التحليل متصل.</span>
+                        <span style="color: var(--neon-cyan);">ONLINE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isArabic = true;
+        let isShieldActive = true;
+        let totalEvents = 0;
+        let suppressedEvents = 0;
+        const canvas = document.getElementById('touchCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Recent pointer tracking
+        let lastTouch = null;
+        let recentDowns = [];
+
+        function addLog(msg, isAnomaly = false) {
+            const list = document.getElementById('eventLogList');
+            const item = document.createElement('div');
+            item.className = 'log-item' + (isAnomaly ? ' anomaly' : '');
+            const time = new Date().toLocaleTimeString();
+            item.innerHTML = `<span>${msg}</span><span style="color: ${isAnomaly ? 'var(--neon-danger)' : 'var(--neon-cyan)'}">${time}</span>`;
+            list.insertBefore(item, list.firstChild);
+            if (list.children.length > 20) list.removeChild(list.lastChild);
+        }
+
+        // Core Touch Analysis Algorithm (Port of TouchAnalysisEngine.kt)
+        function analyzeTouch(raw) {
+            totalEvents++;
+            document.getElementById('totalVal').innerText = totalEvents;
+
+            let score = 0;
+            let reasons = [];
+
+            // 1. Dead Zone Check (Top 50px)
+            if (raw.y <= 50) {
+                score += 85;
+                reasons.push("Dead Zone Block (Top Edge)");
+            }
+
+            // 2. Sub-frame duration (< 12ms)
+            if (raw.duration !== undefined && raw.duration < 12) {
+                score += 50;
+                reasons.push(`Sub-frame ADC pulse (${raw.duration}ms)`);
+            }
+
+            // 3. Impossible velocity
+            if (lastTouch) {
+                let dx = raw.x - lastTouch.x;
+                let dy = raw.y - lastTouch.y;
+                let dist = Math.hypot(dx, dy);
+                let dt = Math.max(1, raw.time - lastTouch.time);
+                let vel = dist / dt;
+                if (vel > 6.0 && dist > 80) {
+                    score += 55;
+                    reasons.push(`Erratic Jump (${vel.toFixed(1)} px/ms)`);
+                }
+            }
+
+            // 4. Legitimate touch protection: smooth normal swipe
+            if (raw.isSwipe) {
+                score = Math.max(0, score - 40);
+            }
+
+            let isSuppressed = isShieldActive && (score >= 50);
+
+            if (isSuppressed) {
+                suppressedEvents++;
+                document.getElementById('suppressedVal').innerText = suppressedEvents;
+                document.getElementById('threatVal').innerText = "عالي / نبضات وهمية";
+                document.getElementById('threatVal').style.color = "var(--neon-danger)";
+                addLog(`⚠️ [محجوب] لمسة وهمية: ${reasons.join(', ')} (Score: ${score}/100)`, true);
+            } else {
+                if (score > 30) {
+                    addLog(`ℹ️ لمسة مريبة مقبولة (Score: ${score}/100)`);
+                }
+            }
+
+            lastTouch = raw;
+            drawTouchVisual(raw.x, raw.y, isSuppressed);
+            return isSuppressed;
+        }
+
+        function drawTouchVisual(x, y, isSuppressed) {
+            ctx.beginPath();
+            ctx.arc(x, y, isSuppressed ? 16 : 24, 0, Math.PI * 2);
+            ctx.fillStyle = isSuppressed ? 'rgba(255, 23, 68, 0.4)' : 'rgba(0, 240, 255, 0.3)';
+            ctx.fill();
+            ctx.strokeStyle = isSuppressed ? '#FF1744' : '#00F0FF';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Fade canvas slowly
+            setTimeout(() => {
+                ctx.fillStyle = 'rgba(4, 8, 20, 0.15)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }, 300);
+        }
+
+        // User interactions on canvas
+        let downTime = 0;
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            downTime = Date.now();
+            analyzeTouch({ x: e.clientX - rect.left, y: e.clientY - rect.top, time: downTime });
+        });
+
+        canvas.addEventListener('mouseup', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            let duration = Date.now() - downTime;
+            analyzeTouch({ x: e.clientX - rect.left, y: e.clientY - rect.top, time: Date.now(), duration: duration });
+        });
+
+        // Fault Injections
+        function injectSubFrameTap() {
+            let now = Date.now();
+            addLog("🔬 حقن نقرة شبحية فائقة السرعة (4ms pulse)...");
+            analyzeTouch({ x: 180, y: 300, time: now, duration: 4 });
+        }
+
+        function injectMicroBurst() {
+            addLog("💥 حقن نبضات وهمية متتالية (Cluster Burst)...");
+            let t = Date.now();
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    analyzeTouch({ x: 200 + (i % 2), y: 350 + (i % 2), time: t + (i * 8), duration: 5 });
+                }, i * 20);
+            }
+        }
+
+        function injectTeleportJump() {
+            addLog("🚀 حقن قفزة انتقال مستحيلة فيزيائياً...");
+            let now = Date.now();
+            analyzeTouch({ x: 50, y: 150, time: now });
+            setTimeout(() => {
+                analyzeTouch({ x: 320, y: 520, time: now + 3 });
+            }, 30);
+        }
+
+        function injectNormalSwipe() {
+            addLog("👆 حقن سحبة إصبع طبيعية وسلسة (Legitimate)...");
+            let t = Date.now();
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    analyzeTouch({ x: 100 + (i * 15), y: 400 - (i * 20), time: t + (i * 25), isSwipe: true });
+                }, i * 25);
+            }
+        }
+
+        function toggleShield() {
+            isShieldActive = !isShieldActive;
+            const btn = document.getElementById('toggleShieldBtn');
+            const statusText = document.getElementById('shieldStatusText');
+            if (isShieldActive) {
+                statusText.innerText = isArabic ? "الحماية نشطة (PROTECTION ACTIVE)" : "PROTECTION ACTIVE";
+                statusText.style.color = "var(--neon-cyan)";
+                btn.innerText = isArabic ? "إيقاف الحماية مؤقتاً" : "Pause Shield";
+                document.getElementById('topDeadZone').style.display = 'flex';
+                addLog("🛡️ تم تفعيل درع الحماية بنجاح");
+            } else {
+                statusText.innerText = isArabic ? "الحماية معطلة (SHIELD STANDBY)" : "SHIELD STANDBY";
+                statusText.style.color = "var(--text-secondary)";
+                btn.innerText = isArabic ? "تفعيل الدرع" : "Engage Shield";
+                document.getElementById('topDeadZone').style.display = 'none';
+                addLog("⚠️ تم إيقاف الحماية مؤقتاً");
+            }
+        }
+
+        function triggerEmergencyKill() {
+            isShieldActive = false;
+            document.getElementById('topDeadZone').style.display = 'none';
+            document.getElementById('shieldStatusText').innerText = isArabic ? "تم تحرير الشاشة (EMERGENCY KILLED)" : "EMERGENCY KILLED";
+            document.getElementById('shieldStatusText').style.color = "var(--neon-danger)";
+            addLog("⚡ [طوارئ] تم إزالة كافة طبقات الحجب وتحرير الشاشة فوراً!", true);
+        }
+
+        function clearLogs() {
+            document.getElementById('eventLogList').innerHTML = '';
+        }
+
+        function toggleLanguage() {
+            isArabic = !isArabic;
+            document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+            document.documentElement.lang = isArabic ? 'ar' : 'en';
+            document.getElementById('langToggle').innerText = isArabic ? 'English' : 'عربي';
+
+            if (isArabic) {
+                document.getElementById('appTitle').innerText = 'TOUCH GUARD AI';
+                document.getElementById('appSub').innerText = 'نظام الذكاء الاصطناعي لكشف وعزل اللمسات الوهمية | Huawei Honor 8X';
+                document.getElementById('telemetryTitle').innerText = 'القياس عن بُعد (LIVE TELEMETRY)';
+                document.getElementById('lblThreat').innerText = 'مستوى الخطورة';
+                document.getElementById('lblSuppressed').innerText = 'اللمسات المحجوبة';
+                document.getElementById('lblTotal').innerText = 'إجمالي الأحداث';
+                document.getElementById('lblZones').innerText = 'المناطق الميتة';
+                document.getElementById('simTitle').innerText = 'محاكي أعطال الشاشة (GHOST TOUCH SIMULATOR)';
+                document.getElementById('simDesc').innerText = 'حقن أنماط أعطال عتادية لاختبار كفاءة نظام النقاط دون إتلاف الهاتف:';
+                document.getElementById('killswitchBtn').innerText = '⚡ زر الطوارئ الفوري';
+                document.getElementById('canvasHint').innerText = 'المس أو اسحب داخل الشاشة لاختبار خوارزمية التصفية مباشرة';
+            } else {
+                document.getElementById('appTitle').innerText = 'TOUCH GUARD AI';
+                document.getElementById('appSub').innerText = 'Advanced Ghost Touch Detection & Protection | Huawei Honor 8X';
+                document.getElementById('telemetryTitle').innerText = 'LIVE TELEMETRY & METRICS';
+                document.getElementById('lblThreat').innerText = 'Threat Level';
+                document.getElementById('lblSuppressed').innerText = 'Ghost Filtered';
+                document.getElementById('lblTotal').innerText = 'Total Events';
+                document.getElementById('lblZones').innerText = 'Dead Zones';
+                document.getElementById('simTitle').innerText = 'GHOST TOUCH SIMULATOR';
+                document.getElementById('simDesc').innerText = 'Inject hardware fault patterns to validate scoring without damaging physical phone:';
+                document.getElementById('killswitchBtn').innerText = '⚡ EMERGENCY KILLSWITCH';
+                document.getElementById('canvasHint').innerText = 'Touch or drag inside screen to test filtering algorithm directly';
+            }
+        }
+    </script>
+</body>
+</html>

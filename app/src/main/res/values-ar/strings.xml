@@ -1,0 +1,114 @@
+<resources>
+    <string name="app_name">Touch Guard AI</string>
+    <string name="app_tagline">نظام الذكاء الاصطناعي المتقدم لكشف وعزل اللمسات الوهمية وحماية شاشة اللمس</string>
+    <string name="tile_label">درع اللمس</string>
+    <string name="accessibility_service_description">جسر إمكانية الوصول لـ Touch Guard AI: يُستخدم لاختبار طبقات النوافذ واستكشاف القياس عن بُعد لإيماءات النظام.</string>
+
+    <!-- التنقل -->
+    <string name="nav_dashboard">لوحة التحكم</string>
+    <string name="nav_diagnostics">الفحص والتشخيص</string>
+    <string name="nav_deadzones">المناطق الميتة</string>
+    <string name="nav_profiles">ملفات الحماية</string>
+    <string name="nav_reports">أبحاث النظام</string>
+    <string name="nav_simulator">المحاكي</string>
+
+    <!-- لوحة التحكم -->
+    <string name="status_shield_active">الحماية نشطة</string>
+    <string name="status_shield_standby">الدرع في وضع الاستعداد</string>
+    <string name="status_shield_calibrating">جاري معايرة الحساسات</string>
+    <string name="shield_toggle_start">تفعيل الدرع</string>
+    <string name="shield_toggle_stop">إيقاف الحماية</string>
+    <string name="emergency_disable">زر الطوارئ الفوري (Killswitch)</string>
+    <string name="emergency_desc">إزالة كافة طبقات الحماية فوراً وتحرير الشاشة بنقرة واحدة</string>
+
+    <!-- القياسات -->
+    <string name="metric_threat_level">مستوى الخطورة</string>
+    <string name="metric_threat_low">منخفض / مستقر</string>
+    <string name="metric_threat_medium">اهتزاز متوسط</string>
+    <string name="metric_threat_high">نبضات وهمية متكررة</string>
+    <string name="metric_threat_critical">لمسات وهمية شديدة</string>
+    <string name="metric_abnormal_events">الأحداث المشبوهة المكتشفة</string>
+    <string name="metric_active_deadzones">المناطق المعزولة النشطة</string>
+    <string name="metric_touch_rate">معدل العينات للمس</string>
+    <string name="metric_target_device">العتاد المستهدف</string>
+    <string name="activity_graph_title">معدل تكرار اللمس والمنحنى البياني للأحداث الشاذة</string>
+
+    <!-- الفحص والتشخيص -->
+    <string name="diag_title">أدوات فحص واختبار شاشة اللمس</string>
+    <string name="diag_grid_test">شبكة اللمس للشاشة الكاملة (Touch Grid)</string>
+    <string name="diag_grid_desc">مصفوفة تفاعلية لاختبار استجابة كافة قطاعات محول اللمس (Digitizer)</string>
+    <string name="diag_multitouch">فحص اللمس المتعدد (10 أصابع)</string>
+    <string name="diag_multitouch_desc">تتبع دقة الأصابع، وتذبذب الضغط، واكتشاف المؤشرات الشبحية التلقائية</string>
+    <string name="diag_linear_test">اختبار الخطية والتواصل (Linearity Test)</string>
+    <string name="diag_linear_desc">اكتشاف المسارات المقطوعة والتالفة على المحاور الأفقية والعمودية</string>
+    <string name="diag_deadpixel">فحص البكسلات الميتة مقابل المناطق الميتة</string>
+    <string name="diag_deadpixel_desc">ألوان نقية للفصل بين عيوب لوحة العرض وعيوب لمس الشاشة الرقمية</string>
+    <string name="diag_autonomous">المراقب الذاتي للمسات الوهمية</string>
+    <string name="diag_autonomous_desc">اختبار تلقائي: اترك الهاتف دون لمس لرصد أي نقرات شبحية تلقائياً</string>
+    <string name="diag_heatmap">خريطة كثافة اللمس الحرارية (Heatmap)</string>
+    <string name="diag_heatmap_desc">خريطة حرارية لتحديد المناطق الأكثر عرضة للأعطال والنبضات الوهمية</string>
+    <string name="diag_start_test">بدء الاختبار</string>
+    <string name="diag_reset">إعادة ضبط اللوحة</string>
+    <string name="diag_exit">إنهاء الفحص</string>
+
+    <!-- المناطق الميتة -->
+    <string name="deadzone_title">الحماية الذكية للمناطق التالفة (Smart Dead Zone)</string>
+    <string name="deadzone_desc">تحديد المناطق المتضررة التي تصدر نقرات وهمية لعزلها ومنع الأحداث من التأثير على النظام.</string>
+    <string name="deadzone_add_zone">إضافة منطقة ميتة</string>
+    <string name="deadzone_calibrate">المعايرة المرئية التفاعلية</string>
+    <string name="deadzone_mode_monitor">مراقبة وتسجيل فقط (Monitor Only)</string>
+    <string name="deadzone_mode_block">حجب لمسات المنطقة كلياً (Block Touch Zone)</string>
+    <string name="deadzone_warning">تنبيه تقني: حجب المنطقة يعزل كافة اللمسات داخل نطاقها (الحقيقية والوهمية معاً)، ولا يمكن تمرير اللمس الصحيح بمفرده في المنطقة المغطاة.</string>
+    <string name="deadzone_name">اسم المنطقة</string>
+    <string name="deadzone_preset_top_edge">الحافة العليا والنوتش</string>
+    <string name="deadzone_preset_bottom_bar">شريط التنقل السفلي</string>
+    <string name="deadzone_preset_left_edge">الحافة الجانبية اليسرى</string>
+    <string name="deadzone_preset_right_edge">الحافة الجانبية اليمنى</string>
+    <string name="deadzone_preset_center">منطقة الكسر المركزية</string>
+    <string name="deadzone_preset_custom">مستطيل مخصص حر</string>
+
+    <!-- ملفات الحماية -->
+    <string name="profiles_title">ملفات الحماية الذكية</string>
+    <string name="profile_normal">الوضع العادي (Normal)</string>
+    <string name="profile_normal_desc">تصفية متوازنة للاستخدام اليومي مع لمسات خفيفة غير مستقرة</string>
+    <string name="profile_sensitive">وضع الشاشة الحساسة (Sensitive)</string>
+    <string name="profile_sensitive_desc">تصفية صارمة للذبذبات السريعة للشاشات ذات الشروخ الدقيقة</string>
+    <string name="profile_damaged_edge">وضع الحواف المتضررة (Damaged Edge)</string>
+    <string name="profile_damaged_edge_desc">تعزيز رفض نقرات الحواف واللمسات العرضية على إطار الهاتف</string>
+    <string name="profile_damaged_zone">وضع المناطق المتضررة (Damaged Zone)</string>
+    <string name="profile_damaged_zone_desc">تشغيل طبقات الحجب التلقائية فوق المناطق المعايرة مسبقاً</string>
+    <string name="profile_diagnostic">وضع التشخيص والمراقبة (Diagnostic)</string>
+    <string name="profile_diagnostic_desc">تسجيل كامل لكافة البيانات الخام دون إسقاط أي أحداث للمقارنة</string>
+
+    <!-- المحاكي -->
+    <string name="simulator_title">محاكي اللمسات الوهمية (Ghost Touch Simulator)</string>
+    <string name="simulator_desc">محاكاة أعطال محول اللمس برمجياً لاختبار محرك التحليل ونظام النقاط دون الحاجة لإتلاف الشاشة فعلياً.</string>
+    <string name="sim_single_tap">حقن نقرة شبحية مفردة</string>
+    <string name="sim_burst">حقن نبضات سريعة جداً (50 نقرة/ثانية)</string>
+    <string name="sim_edge_jitter">محاكاة اهتزاز الحواف</string>
+    <string name="sim_erratic_drag">محاكاة سحب عشوائي قافز</string>
+    <string name="sim_stationary_tremor">محاكاة لمسة ثابتة مرتجفة</string>
+    <string name="sim_normal_swipe">محاكاة سحبة إصبع طبيعية</string>
+
+    <!-- الأذونات -->
+    <string name="permission_overlay_title">مطلوب إذن الظهور فوق التطبيقات</string>
+    <string name="permission_overlay_desc">يحتاج Touch Guard AI إلى إذن \'الظهور فوق التطبيقات الأخرى\' لإنشاء طبقات العزل للمناطق الميتة وزر الطوارئ الفوري.</string>
+    <string name="grant_permission">منح الإذن الآن</string>
+
+    <!-- الإشعارات -->
+    <string name="notif_channel_name">خدمة Touch Guard AI</string>
+    <string name="notif_channel_desc">مراقبة وحماية الشاشة من اللمسات الوهمية</string>
+    <string name="notif_title_active">درع Touch Guard AI يحمي شاشتك</string>
+    <string name="notif_content_active">الحماية نشطة: تم رصد ومنع %1$d حدثاً مشبوهاً</string>
+    <string name="notif_action_kill">إيقاف طوارئ</string>
+    <string name="notif_action_settings">الإعدادات</string>
+
+    <!-- تفاصيل العتاد -->
+    <string name="device_info_title">فحص العتاد ومعلومات النظام</string>
+    <string name="device_model">طراز الجهاز: %1$s (%2$s)</string>
+    <string name="device_soc">المعالج والرقاقة: %1$s</string>
+    <string name="device_emui">إصدار EMUI: %1$s</string>
+    <string name="device_android">إصدار Android: %1$s (API %2$d)</string>
+    <string name="device_resolution">الشاشة: %1$d × %2$d بتردد %3$.1f هرتز</string>
+    <string name="device_input_drivers">مشغلات اللمس المكتشفة: %1$s</string>
+</resources>
